@@ -30,3 +30,4 @@ test('sum should be 6', ()=> {
   const sum = screen.getByTitle("sum")
   expect(sum.textContent).toBe("6")
 })
+
