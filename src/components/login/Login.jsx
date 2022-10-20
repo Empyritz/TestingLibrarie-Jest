@@ -43,7 +43,7 @@ const Login = () => {
 
   return ( 
     <div>
-      <span className="user">{user.name}</span>
+      <span data-testid="text" className="user">{user.name}</span>
       <form >
         <input type="text" placeholder="Username" onChange={handleChange} name="username" value={formState.username}/>
         <input type="password" placeholder="Password" onChange={handleChange} name="password" value={formState.password}/>

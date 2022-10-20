@@ -1,11 +1,18 @@
 import { fireEvent, render, screen, waitFor, act } from "@testing-library/react"
 import Login from "./login/Login.jsx"
 import axios from 'axios'
-import { fetchUser } from './login/fetchUsers.js'
+import { fetchUser} from './login/fetchUsers.js'
 import React from 'react';
 // import mockAxios from 'jest-mock-axios'
 
 jest.mock("axios")
+
+
+// describe("fetchUser", () =>{
+//   afterEach(() => {
+//     mockAxios.reset()
+//   })
+// })
 
 // jest.mock("axios", ()=>({
 
@@ -13,7 +20,7 @@ jest.mock("axios")
 
 //   default: {
 //     get: ()=>({
-//       data:{id: 1, name:"Jhon"}
+//       data:{id: 1, name:"Leanne Graham"}
 //     })
 //   }
 // }))
@@ -139,20 +146,32 @@ test('loading should not be rendered after fetching', async ()=> {
   await waitFor(()=>expect(buttonEl).not.toHaveTextContent("Wait")) 
 })
 
-// test("user should be rendered after fetching", async () => {
-//   render(<Login/>)
-//   const buttonEl = screen.getByRole("button");
-//   const usernameInputEl = screen.getByPlaceholderText("Username");
-//   const passwordInputEl = screen.getByPlaceholderText("Password");
+test("user should be rendered after fetching", async () => {
+  render(<Login/>)
+  const userMock = {data: { id: 1, name: "Leanne Graham" }}
+  axios.get.mockResolvedValueOnce(userMock)
+  // const userMockFail = { id: 2, name: "Nada" }
+  // const URL = "https://jsonplaceholder.typicode.com/users/1"
+  const buttonEl = screen.getByRole("button");
+  const usernameInputEl = screen.getByPlaceholderText("Username");
+  const passwordInputEl = screen.getByPlaceholderText("Password");
 
-//   const testValue = "test"
+  const testValue = "test"
   
-//   fireEvent.change(passwordInputEl, {target: {value:testValue} })
-//   fireEvent.change(usernameInputEl, {target: {value:testValue} })
-//   fireEvent.click(buttonEl);
+  fireEvent.change(passwordInputEl, {target: {value:testValue} })
+  fireEvent.change(usernameInputEl, {target: {value:testValue} })
+  fireEvent.click(buttonEl);
 
-//   axios.get.mockResolvedValueOnce()
+  //given
+  
 
-//   const userItem = await screen.findByText('Leanne Graham')
-//   expect(userItem).toBeInTheDocument()
-// })
+  //when
+  // const result = await fetchUser()
+  // // expect(result).toEqual(userMock)
+  // // then 
+  // expect(axios.get).toHaveBeenCalledWith(URL)
+  // expect(result).toEqual(userMock)
+
+  const userItem = await screen.findByText('Leanne Graham')
+  expect(userItem).toBeInTheDocument()
+})
