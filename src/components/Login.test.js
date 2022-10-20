@@ -123,11 +123,13 @@ test('loading should be rendered when click', ()=> {
 
 test('loading should not be rendered after fetching', async ()=> {
   render(<Login />);
+  // const promise = new Promise
   const userMock = { data: { id: 1, name: "Leanne Graham" } }
+  axios.get.mockResolvedValue(userMock)
   const buttonEl = screen.getByRole("button");
   const usernameInputEl = screen.getByPlaceholderText("Username");
   const passwordInputEl = screen.getByPlaceholderText("Password");
-  const URL = "https://jsonplaceholder.typicode.com/users/1"
+  // const URL = "https://jsonplaceholder.typicode.com/users/1"
   
   const testValue = "test"
   
@@ -135,15 +137,15 @@ test('loading should not be rendered after fetching', async ()=> {
   fireEvent.change(usernameInputEl, {target: {value:testValue} })
   fireEvent.click(buttonEl);
   
-  axios.get.mockResolvedValue(userMock)
+  await act(() => jest.fn())
 
-  const result = await act(async () => await fetchUser())
+  // const result = await act(async () => await fetchUser())
 
-  expect(axios.get).toHaveBeenCalledWith(URL)
+  // expect(axios.get).toHaveBeenCalledWith(URL)
 
-  expect(result).toEqual(userMock)
+  // expect(result).toEqual(userMock)
 
-  await waitFor(()=>expect(buttonEl).not.toHaveTextContent("Wait")) 
+  await waitFor(() => expect(buttonEl).not.toHaveTextContent("Wait"))
 })
 
 test("user should be rendered after fetching", async () => {
